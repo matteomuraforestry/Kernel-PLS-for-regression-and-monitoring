@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 
 from KerNIPALS import KerNIPALS
 from kernel_utils import Kernel, Kernel_test
+from kernel_utils import rbf_kernel # Added by me
 
 #%% generate data
 def z(x):
@@ -42,8 +43,14 @@ Nt = Xt.shape[0]
 n_latents = 8
 
 # kernel matrices
-K = Kernel(X, 1.8)
-K_t = Kernel_test(X, Xt, 1.8)
+# K = Kernel(X, 1.8) # Original
+# K_t = Kernel_test(X, Xt, 1.8) # Original
+# My update with rbf_kernel
+gamma = 1.8  # or any other suitable value
+K = rbf_kernel(X, X, gamma)
+K_t = rbf_kernel(Xt, X, gamma)
+
+
 
 # centralization of kernel matrices
 M = np.eye(N) - np.ones((N,N))/N
